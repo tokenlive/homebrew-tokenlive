@@ -9,7 +9,7 @@ class Tokenlive < Formula
 
   if Hardware::CPU.arm?
     url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.1.0/tokenlive-0.1.0-darwin-arm64.tar.gz"
-    sha256 "424303235618697f2e52ab016cd9ed0eeb39910318ef42193320ee9dac0ab4bc"
+    sha256 "305be248301bb306881b0fbe4d1bd89d3e8cb67ea18cd3782ba3945b7435c615"
   else
     odie "TokenLive prebuilt binaries are only available for Apple Silicon (arm64). Build from source instead."
   end
