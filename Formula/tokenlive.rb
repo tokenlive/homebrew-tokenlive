@@ -4,12 +4,12 @@
 class Tokenlive < Formula
   desc "All-in-one LLM API gateway and admin console"
   homepage "https://github.com/tokenlive/tokenlive-standalone"
-  version "0.4.0"
+  version "0.5.0"
   license "Apache-2.0"
 
   if Hardware::CPU.arm?
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.4.0/tokenlive-0.4.0-darwin-arm64.tar.gz"
-    sha256 "af21cedd748470ea89a6d42e1f99d05c45df61b0ba16fbab87ec271e49157d23"
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.5.0/tokenlive-0.5.0-darwin-arm64.tar.gz"
+    sha256 "b1fbe02c13cfac33d95051c53995013f4cc3bc849c81004f78f7e1cd0cd363e7"
   else
     odie "TokenLive prebuilt binaries are only available for Apple Silicon (arm64). Build from source instead."
   end
