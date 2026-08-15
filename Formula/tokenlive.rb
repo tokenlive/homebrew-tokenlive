@@ -1,26 +1,44 @@
 # typed: false
 # frozen_string_literal: true
 
+# Homebrew Formula for TokenLive all-in-one.
+#
+# Local install (sibling gateway + admin checkouts):
+#   ./scripts/brew-install-local.sh
+#
+# After install:
+#   brew services start tokenlive   # when formula is registered
+#   tokenlive-start                 # LaunchAgent helper
+#   tokenlive                       # foreground (paths baked in)
+#
 class Tokenlive < Formula
-  desc "All-in-one LLM API gateway and admin console"
+  desc "TokenLive all-in-one LLM API gateway and admin console"
   homepage "https://github.com/tokenlive/tokenlive-standalone"
-  version "0.5.0"
+  version "0.6.0"
   license "Apache-2.0"
 
-  if Hardware::CPU.arm?
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.5.0/tokenlive-0.5.0-darwin-arm64.tar.gz"
-    sha256 "30e0c0affc9217e4d2e536f4913be2132c9a368dc20188ce4b4bf4e05c5f5a10"
+  if Hardware::CPU.intel?
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.6.0/tokenlive-0.6.0-darwin-amd64.tar.gz"
+    sha256 "9c17277455553773f6f840a67415a1c2266482bf2b6f66a7d34544df8436e9f5"
   else
-    odie "TokenLive prebuilt binaries are only available for Apple Silicon (arm64). Build from source instead."
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.6.0/tokenlive-0.6.0-darwin-arm64.tar.gz"
+    sha256 "553ee6c87b0ef32b4099010d3be9e12520e03e1a1bc221170fe3848972dddf90"
   end
 
   def install
     bin.install "bin/tokenlive"
     (pkgshare/"admin").install Dir["share/tokenlive/admin/*"]
+    (pkgshare/"web").mkpath
     (pkgshare/"web").install Dir["share/tokenlive/web/*"] if Dir["share/tokenlive/web/*"].any?
+    libexec.install "libexec/install-brew-config.sh"
 
     (etc/"tokenlive").mkpath
-    (etc/"tokenlive").install "etc/tokenlive/config.yml" unless (etc/"tokenlive/config.yml").exist?
+    system "bash",
+           libexec/"install-brew-config.sh",
+           buildpath/"etc/tokenlive/config.yml",
+           etc/"tokenlive"
+
+    rm_f etc/"tokenlive/config.example.yml"
     (etc/"tokenlive").install "etc/tokenlive/config.example.yml"
     (var/"tokenlive").mkpath
   end
@@ -29,13 +47,25 @@ class Tokenlive < Formula
     <<~EOS
       Start:
         brew services start tokenlive
-        # or: tokenlive (foreground)
+        # or: tokenlive
+
+      Logs & Status:
+        tokenlive logs
+        tokenlive logs -f
+        tokenlive logs -e
+        tokenlive logs --check
+        tokenlive status
 
       Open http://127.0.0.1:2525 — login admin / admin
-      Config: #{etc}/tokenlive/config.yml
+      Active config: #{etc}/tokenlive/config.yml
+      Latest default: #{etc}/tokenlive/config.yml.default
+
+      Modified active configs are preserved during upgrades. Compare with:
+        diff #{etc}/tokenlive/config.yml #{etc}/tokenlive/config.yml.default
     EOS
   end
 
+  # Binary-only service; conf/data/admin/web come from build-time defaults.
   service do
     run [opt_bin/"tokenlive"]
     keep_alive true
