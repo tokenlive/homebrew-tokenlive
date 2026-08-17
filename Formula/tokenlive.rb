@@ -14,15 +14,15 @@
 class Tokenlive < Formula
   desc "TokenLive all-in-one LLM API gateway and admin console"
   homepage "https://github.com/tokenlive/tokenlive-standalone"
-  version "0.7.0"
+  version "0.7.1"
   license "Apache-2.0"
 
   if Hardware::CPU.intel?
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.7.0/tokenlive-0.7.0-darwin-amd64.tar.gz"
-    sha256 "25b7b11cca74c85f6d76ddd16aeb853b6fc7beef9e4a3beaa75ab1bb127e54ba"
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.7.1/tokenlive-0.7.1-darwin-amd64.tar.gz"
+    sha256 "21defffc4eb696527c02c0777934fe2100ee385bfef8e40458dab089ac6bacd0"
   else
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.7.0/tokenlive-0.7.0-darwin-arm64.tar.gz"
-    sha256 "54092c5edc38f6d74e00a4b26d726895644ae08f56ea4c126a3f0e958dc91961"
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.7.1/tokenlive-0.7.1-darwin-arm64.tar.gz"
+    sha256 "25debed683206d08cd8cd6ae07c4751ff6d9499a93f9c35d3882c3b035f82d0b"
   end
 
   def install
