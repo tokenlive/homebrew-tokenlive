@@ -14,15 +14,15 @@
 class Tokenlive < Formula
   desc "TokenLive all-in-one LLM API gateway and admin console"
   homepage "https://github.com/tokenlive/tokenlive-standalone"
-  version "0.9.9"
+  version "0.9.10"
   license "Apache-2.0"
 
   if Hardware::CPU.intel?
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.9.9/tokenlive-0.9.9-darwin-amd64.tar.gz"
-    sha256 "37301844d38bbafac63cc2b15fda95c4da601aa911b78111ad02857e880975d3"
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.9.10/tokenlive-0.9.10-darwin-amd64.tar.gz"
+    sha256 "cfa7ebb39eb922cc70bc2a78d4452442bbabf78be3e6b4418e5b9fc537255413"
   else
-    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.9.9/tokenlive-0.9.9-darwin-arm64.tar.gz"
-    sha256 "ce698bd0aeb75fa35deb7d7a45a07de5802034a90558702c1e2ee57b1ee66fc5"
+    url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v0.9.10/tokenlive-0.9.10-darwin-arm64.tar.gz"
+    sha256 "016183402fa7099dc4cd29872836abf1c88ec8418703ebc753fb08e9fe2373dd"
   end
 
   def install
@@ -31,6 +31,7 @@ class Tokenlive < Formula
     (pkgshare/"web").mkpath
     (pkgshare/"web").install Dir["share/tokenlive/web/*"] if Dir["share/tokenlive/web/*"].any?
     libexec.install "libexec/install-brew-config.sh"
+    (libexec/"tokenlive-install-channel").write("homebrew\n")
 
     (etc/"tokenlive").mkpath
     system "bash",
