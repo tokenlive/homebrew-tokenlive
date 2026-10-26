@@ -19,10 +19,10 @@ class Tokenlive < Formula
 
   if Hardware::CPU.intel?
     url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v1.0.3/tokenlive-1.0.3-darwin-amd64.tar.gz"
-    sha256 "5f8f3d716b2ca4251e21728be425425aca81bed79d07da36531a16124d0125c9"
+    sha256 "c68b841d490ffdc8208d51be0a3c7973d9bc3aae51b0e2ac125f53f5eb362b15"
   else
     url "https://github.com/tokenlive/tokenlive-standalone/releases/download/v1.0.3/tokenlive-1.0.3-darwin-arm64.tar.gz"
-    sha256 "dd2d69f37792c8f67ec46e4d28a1f53f79064e064ac7de6c444c4094acda74cc"
+    sha256 "87c192877c39c09a8bb52b478ce142a972bbc8ebbc95e00f86155ab8fc839b6a"
   end
 
   def install
